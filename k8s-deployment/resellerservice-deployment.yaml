@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resellerservice-deployment
+  labels:
+    app: resellerservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resellerservice
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: resellerservice
+        tier: backend
+    spec:
+      containers:
+      - name: resellerservice
+        image: "sonsonson110/kien-truc-thiet-ke-final:resellerservicev1"
+        ports:
+        - containerPort: 8080

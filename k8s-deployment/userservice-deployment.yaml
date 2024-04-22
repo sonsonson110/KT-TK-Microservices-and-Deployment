@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userservice-deployment
+  labels:
+    app: userservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userservice
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: userservice
+        tier: backend
+    spec:
+      containers:
+      - name: userservice
+        image: "sonsonson110/kien-truc-thiet-ke-final:userservicev1"
+        ports:
+        - containerPort: 8080

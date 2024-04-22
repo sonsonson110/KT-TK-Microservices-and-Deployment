@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productservice-deployment
+  labels:
+    app: productservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: productservice
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: productservice
+        tier: backend
+    spec:
+      containers:
+      - name: productservice
+        image: "sonsonson110/kien-truc-thiet-ke-final:productservicev1"
+        ports:
+        - containerPort: 8080

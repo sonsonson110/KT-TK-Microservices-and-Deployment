@@ -31,7 +31,7 @@ services:
   userservice:
     depends_on:
       - mysql
-    image: "sonsonson110/kien-truc-thiet-ke-final:userservicev1"
+    image: "sonsonson110/kien-truc-thiet-ke-final:userservicev2"
     # in case mysql not created
     restart: on-failure
     # keep open terminal

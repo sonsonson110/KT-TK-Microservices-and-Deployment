@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  # creates a ReplicaSet that creates three replicated Pods
+  replicas: 1
+  # defines how the created ReplicaSet finds which Pods to manage
+  selector:
+    matchLabels:
+      app: nginx
+      tier: apigateway
+  template:
+    # label the Pods, the service must match metadata.labels fields
+    metadata:
+      labels:
+        app: nginx
+        tier: apigateway
+    # indicates that the Pods run one container with container name 'nginx', from public repository image
+    spec:
+      containers:
+      # create one container and name the container 'nginx'
+      - name: nginx
+        image: "sonsonson110/kien-truc-thiet-ke-final:apigatewayv1"
+        ports:
+        # the actual port the app listening in container
+        - containerPort: 80

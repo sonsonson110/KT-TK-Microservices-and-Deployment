@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: supplierservice
+spec:
+  selector:
+      app: supplierservice
+      tier: backend
+  ports:
+    - protocol: TCP
+      port: 8080
+  # type: ClusterIp by default, only accessible in k8s virtual network

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  # must match the defined Pods labels
+  selector:
+      app: nginx
+      tier: apigateway
+  ports:
+    - protocol: TCP
+      port: 80
+  # exposes the Service on each Node's IP at a static port (we have 1 node)
+  type: NodePort
