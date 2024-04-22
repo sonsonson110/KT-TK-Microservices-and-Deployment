@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nginx
 spec:
-  # creates a ReplicaSet that creates three replicated Pods
+  # creates a ReplicaSet that creates three replicated Pods, poor laptop like mine run 1 to stop resources from crying
   replicas: 1
   # defines how the created ReplicaSet finds which Pods to manage
   selector:
