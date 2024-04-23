@@ -1,4 +1,4 @@
-> Skip to [Combine services with database & frontend with docker-compose](#combine-services-with-database-&-frontend-with-docker-compose) to run app on docker engine... or [Deploy on Kubernetes](#deploy-on-kubernetes) to practice deployment on Minikube.
+> Skip to [Combine services with database & frontend with docker-compose](#combine-services-with-database-and-frontend-with-docker-compose) to run app on docker engine... or [Deploy on Kubernetes](#deploy-on-kubernetes) to practice deployment on Minikube.
 
 ## Create docker images
 **Make sure docker engine is running**
@@ -120,7 +120,7 @@ docker container run -it --name userservice -p <host-target-port>:8080 sonsonson
 The same run with other services
 > **Note**: remember to expose mysql container port and modify the `application.properties` before building image to test each service container.
 
-## Combine services with database & frontend with docker-compose
+## Combine services with database and frontend with docker-compose
 `docker-compose.yml`
 ```yml
 version: '1'
