@@ -42,9 +42,9 @@ export default function ExportOrdersPage() {
                         <tr key={exportOrder.id}>
                             <td>{exportOrder.id}</td>
                             <td>{new Date(exportOrder.orderDate).toLocaleString()}</td>
-                            <td>{exportOrder.reseller.name}</td>
+                            <td>{exportOrder.reseller?.name ?? "deleted"}</td>
                             <td>{exportOrder.orderStatus}</td>
-                            <td>{exportOrder.reseller.city}</td>
+                            <td>{exportOrder.reseller?.city ?? "deleted"}</td>
                             <td>{calculateTotalOrderPrice({ exportOrder })}</td>
                             <td>
                                 <Link to={`/resellers/exportorders/${exportOrder.id}/confirm`}

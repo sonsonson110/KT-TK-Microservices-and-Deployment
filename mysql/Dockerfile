@@ -1,2 +1,2 @@
 FROM mysql:8.0
-COPY backup.sql /docker-entrypoint-initdb.d
+COPY backupv2.sql /docker-entrypoint-initdb.d

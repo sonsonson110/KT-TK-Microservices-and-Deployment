@@ -19,7 +19,7 @@ export async function exportOrderConfirmLoader({ params }) {
     const productDetailsData = productDetailsResponse.data;
 
     let resellerUser = null;
-    if (exportOrderData.reseller.userId) {
+    if (exportOrderData.reseller?.userId) {
         // const resellerUserResp = await axios.get(`//${window.location.hostname}:8080/users/${exportOrderData.reseller.userId}`);
         const resellerUserResp = await axios.get(`/api/users/${exportOrderData.reseller.userId}`);
         resellerUser = resellerUserResp.data;
@@ -135,11 +135,11 @@ export default function ExportOrderConfirmPage() {
                     <tbody>
                         <tr>
                             <th>Tên đại lý con</th>
-                            <td><span>{exportOrder.reseller.name}</span></td>
+                            <td><span>{exportOrder.reseller?.name ?? "deleted"}</span></td>
                         </tr>
                         <tr>
                             <th>Số điện thoại</th>
-                            <td><span>{exportOrder.reseller.phoneNumber}</span></td>
+                            <td><span>{exportOrder.reseller?.phoneNumber?? "deleted"}</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -178,7 +178,8 @@ export default function ExportOrderConfirmPage() {
 
             <div>
                 <h1>Thông tin địa chỉ</h1>
-                <table className="table table-striped">
+                { exportOrder.reseller ?
+                    <table className="table table-striped">
                     <tbody>
                         <tr>
                             <th>Đường</th>
@@ -197,7 +198,7 @@ export default function ExportOrderConfirmPage() {
                             <td><span>{exportOrder.reseller.zipcode}</span></td>
                         </tr>
                     </tbody>
-                </table>
+                </table> : "reseller profile deleted"}
             </div>
 
             <div>

@@ -11,7 +11,7 @@ Navigate to ```./mysql```
 ```Dockerfile```
 ```Dockerfile
 FROM mysql:8.0
-COPY backup.sql /docker-entrypoint-initdb.d
+COPY backupv2.sql /docker-entrypoint-initdb.d
 ```
 Build image command (shell). Last parameter is the dockerfile directory (.)
 ```shell
@@ -260,3 +260,11 @@ kubectl logs deployment/<deployment-name> -f
 ```
 
 # Miscellanea
+Dump or restore mysql data in docker container
+```shell
+# Backup
+docker exec CONTAINER_ID /usr/bin/mysqldump -u root --password=password --all-databases > backup.sql
+
+# Restore
+cat backup.sql | docker exec -i CONTAINER /usr/bin/mysql -u root --password=root DATABASE
+```
