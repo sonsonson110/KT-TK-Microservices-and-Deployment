@@ -128,7 +128,7 @@ The same run with other services
 ## Combine services with database and frontend with docker-compose
 `docker-compose.yml`
 ```yml
-version: '1'
+version: '3'
 
 services:
   mysql:
@@ -260,7 +260,3 @@ kubectl logs deployment/<deployment-name> -f
 ```
 
 # Miscellanea
-Change terminal tab name in Ubuntu
-```shell
-echo -ne "\033]0;SOME TITLE HERE\007"
-```
