@@ -1,8 +1,8 @@
-version: '1'
+version: '3'
 
 services:
   mysql:
-    image: "sonsonson110/kien-truc-thiet-ke-final:mysqlv1"
+    image: "sonsonson110/kien-truc-thiet-ke-final:mysqlv3"
     environment:
       - MYSQL_ROOT_PASSWORD=password
     restart: unless-stopped
@@ -12,17 +12,16 @@ services:
       - 3306:3306
 
   frontend:
-    image: "sonsonson110/kien-truc-thiet-ke-final:frontendv1"
+    image: "sonsonson110/kien-truc-thiet-ke-final:frontendv3"
     stdin_open: true
 
   apigateway:
     depends_on:
       - userservice
       - resellerservice
-      - supplierservice
       - productservice
       - frontend
-    image: "sonsonson110/kien-truc-thiet-ke-final:apigatewayv1"
+    image: "sonsonson110/kien-truc-thiet-ke-final:apigatewayv3"
     restart: always
     ports:
       - "3050:80"
@@ -31,44 +30,28 @@ services:
   userservice:
     depends_on:
       - mysql
-    image: "sonsonson110/kien-truc-thiet-ke-final:userservicev2"
+    image: "sonsonson110/kien-truc-thiet-ke-final:userservicev3"
     # in case mysql not created
     restart: on-failure
     # keep open terminal
     stdin_open: true
     tty: true
-    # ports:
-    #   - 8080:8080
 
   resellerservice:
     depends_on:
       - mysql
-    image: "sonsonson110/kien-truc-thiet-ke-final:resellerservicev1"
+    image: "sonsonson110/kien-truc-thiet-ke-final:resellerservicev3"
     restart: on-failure
     stdin_open: true
     tty: true
-    # ports:
-    #   - 8081:8080
-
-  supplierservice:
-    depends_on:
-      - mysql
-    image: "sonsonson110/kien-truc-thiet-ke-final:supplierservicev1"
-    restart: on-failure
-    stdin_open: true
-    tty: true
-    # ports:
-    #   - 8082:8080
 
   productservice:
     depends_on:
       - mysql
-    image: "sonsonson110/kien-truc-thiet-ke-final:productservicev1"
+    image: "sonsonson110/kien-truc-thiet-ke-final:productservicev3"
     restart: on-failure
     stdin_open: true
     tty: true
-    # ports:
-    #   - 8083:8080
 
 # create persistence volumes on host for mysql
 volumes:

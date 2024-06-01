@@ -13,8 +13,9 @@ export default function HomePage() {
     return (
         <>
             <p>Xin chào {JSON.stringify(user)}</p>
-            <Link to={'/resellers'}>Quản lý đại lý con</Link><br/>
-            <Link to={'/suppliers/stat'}>Thống kê nhà cung câp theo hàng nhập</Link><br/>
+            <Link style={{marginBottom: "8px"}} className="btn btn-secondary" to={'/resellers'}>Quản lý đại lý con</Link><br/>
+            <Link style={{marginBottom: "8px"}} className="btn btn-secondary" to={'/resellers/exportorders'}>Danh sách đơn xuất</Link><br/>
+            <Link style={{marginBottom: "8px"}} className="btn btn-secondary" to={'/suppliers/stat'}>Thống kê nhà cung câp theo hàng nhập</Link><br/>
         </>
     );
 }

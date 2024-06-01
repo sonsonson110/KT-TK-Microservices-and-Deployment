@@ -12,15 +12,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    @Autowired
-    UserService userService;
 
-//    @GetMapping()
-//    public ResponseEntity<List<User>> getAllUsers() {
-//        return ResponseEntity
-//                .ok()
-//                .body(userService.getAll());
-//    }
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserById(@PathVariable Integer userId) {
@@ -36,8 +34,7 @@ public class UserController {
         System.out.println(loginFormDto);
         if (user == null)
             return ResponseEntity
-                    .badRequest()
-                    .body("Wrong username or password");
+                    .notFound().build();
         return ResponseEntity
                 .ok()
                 .body(user);

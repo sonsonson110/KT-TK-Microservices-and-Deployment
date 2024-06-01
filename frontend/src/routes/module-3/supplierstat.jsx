@@ -12,40 +12,54 @@ export default function SupplierStatPage() {
 
     const { supplierStatsSes } = useLoaderData();
     const [supplierStats, setSupplierStats] = useState(supplierStatsSes);
+    const [isInitial, setInitial] = useState(true);
     const [datePick, setDatePick] = useState({ startDate: '2024-01-01', endDate: '2025-01-01' });
 
     async function getSupplierStatsByDate() {
-        const startTimestamp = new Date(datePick.startDate).getTime() / 1000;   // eliminate the milis or else backend query wouldn't work
-        const endTimestamp = new Date(datePick.endDate).getTime() / 1000;
-
-        // const response = await axios.get("//" + window.location.hostname + `:8082/suppliers/stat?startDate=${startTimestamp}&endDate=${endTimestamp}`);
-        const response = await axios.get(`/api/suppliers/stat?startDate=${startTimestamp}&endDate=${endTimestamp}`);
+        setInitial(false);
+        const startTimestamp = datePick.startDate + " 00:00:00";
+        const endTimestamp = datePick.endDate + " 00:00:00";
+        // const response = await axios.get(`//${window.location.hostname}:8083/products/suppliers/stat?startDate=${startTimestamp}&endDate=${endTimestamp}`);
+        const response = await axios.get(`/api/products/suppliers/stat?startDate=${startTimestamp}&endDate=${endTimestamp}`);
         setSupplierStats(response.data);
-        sessionStorage.setItem("datePick", JSON.stringify({ startDate: startTimestamp, endDate: endTimestamp }));
+        sessionStorage.setItem("datePick", JSON.stringify({ startDate: datePick.startDate, endDate: datePick.endDate }));
     }
+
+    function cleanupModuleSessionData() {
+        sessionStorage.setItem("datePick", null);
+        sessionStorage.setItem("supplierStats", null);
+    }
+
     useEffect(() => {
         sessionStorage.setItem("supplierStats", JSON.stringify(supplierStats));
     }, [supplierStats]);
 
+    useEffect(() => {
+        const datePick = JSON.parse(sessionStorage.getItem("datePick"));
+        if (datePick) {
+            document.getElementById('startDate').value = datePick.startDate;
+            document.getElementById('endDate').value = datePick.endDate;
+        }
+    }, []);
+
     return (
         <>
+            <Link to={"/home"} class="btn btn-primary" onClick={() => cleanupModuleSessionData()}>Trở về trang chủ</Link>
             <h1>Thông kê nhà cung cấp theo hàng nhập</h1>
-            <label htmlFor="startDate">Ngày bắt đầu</label><br />
-            <input type="date" id="startDate" onChange={(e) => setDatePick({ ...datePick, startDate: e.target.value })}></input>
 
-            <br />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <label htmlFor="startDate">Ngày bắt đầu</label>
+                <input type="date" id="startDate" onChange={(e) => setDatePick({ ...datePick, startDate: e.target.value })} />
 
-            <label htmlFor="endDate">Ngày kết thúc</label><br />
-            <input type="date" id="endDate" onChange={(e) => setDatePick({ ...datePick, endDate: e.target.value })}></input>
+                <label htmlFor="endDate">Ngày kết thúc</label>
+                <input type="date" id="endDate" onChange={(e) => setDatePick({ ...datePick, endDate: e.target.value })} />
 
-            <br />
+                <button onClick={() => getSupplierStatsByDate()}>Truy vấn</button>
+            </div>
+            <br></br>
 
-            <button onClick={() => getSupplierStatsByDate()}>Truy vấn</button>
-
-            <br /><br />
-
-            <h2>Kết quả</h2>
-            <table>
+            <p>Kết quả {!isInitial && <span>từ {new Date(datePick.startDate).toLocaleDateString()} - {new Date(datePick.endDate).toLocaleDateString()}</span>}</p>
+            <table className="table table-striped">
                 <thead>
                     <tr>
                         <th>ID nhà cung cấp</th>
@@ -62,7 +76,7 @@ export default function SupplierStatPage() {
                             <td>{supplierStat.name}</td>
                             <td>{supplierStat.description}</td>
                             <td>{supplierStat.productAmount}</td>
-                            <td><Link to={`/suppliers/${supplierStat.id}/orders`}>Xem chi tiết</Link></td>
+                            <td><Link className="btn btn-secondary" to={`/suppliers/${supplierStat.id}/orders`}>Xem chi tiết</Link></td>
                         </tr>
                     ))}
                 </tbody>

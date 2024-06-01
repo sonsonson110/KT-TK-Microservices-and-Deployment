@@ -7,7 +7,7 @@ export async function action({ request }) {
 
     try {
         // const response = await axios.post(
-        //     "//" + window.location.hostname + ":8080/users/auth",
+        //     `//${window.location.hostname}:8080/users/auth`,
         //     fields
         // )
         const response = await axios.post(
@@ -19,7 +19,7 @@ export async function action({ request }) {
 
     } catch (e) {
         console.error(e);
-        return redirect(`/?error=true`) ;
+        return redirect(`/?error=true`);
     }
 
 }
@@ -30,25 +30,29 @@ export default function LoginPage() {
         <>
             Đăng nhập
             <Form method="post">
-                <p>
+                <div className="form-group">
                     <label htmlFor="username">Username</label>
                     <input
+                        className="form-control"
+                        style={{ width: "400px" }}
                         type="text"
                         name="username"
                         id="username"
                     />
-                </p>
-                <p>
+                </div>
+                <div className="form-group">
                     <label htmlFor="password">Password</label>
                     <input
+                        className="form-control"
+                        style={{ width: "400px" }}
                         type="password"
                         name="password"
                         id="password"
                     />
-                </p>
-                <button type="submit">Login</button>
+                </div>
+                <button class="btn btn-primary" style={{marginTop: "8px"}} type="submit">Login</button>
             </Form>
-            {searchParams.get("error") ? "Đăng nhập thất bại" : <></>}
+            {searchParams.get("error") ? <div style={{marginTop: "8px"}} class="alert alert-danger" role="alert">Đăng nhập thất bại</div> : <></>}
         </>
     );
 }

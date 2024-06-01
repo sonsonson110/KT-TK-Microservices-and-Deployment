@@ -9,8 +9,12 @@ import java.util.List;
 
 @Service
 public class ResellerService {
+    private final ResellerRepository resellerRepository;
+
     @Autowired
-    private ResellerRepository resellerRepository;
+    public ResellerService(ResellerRepository resellerRepository) {
+        this.resellerRepository = resellerRepository;
+    }
 
     public List<Reseller> getAll() {
         return resellerRepository.findAll();
@@ -27,6 +31,7 @@ public class ResellerService {
     public Reseller updateReseller(Reseller reseller) {
         return resellerRepository.save(reseller);
     }
+
     public void deleteResellerById(int resellerId) {
         resellerRepository.deleteById(resellerId);
     }

@@ -4,12 +4,14 @@ import { useLoaderData, Link } from "react-router-dom";
 export async function importOrdersLoader({ params }) {
     const supplierId = params.supplierId;
     const datePick = JSON.parse(sessionStorage.getItem("datePick"));
+    const startTimestamp = datePick.startDate+" 00:00:00";
+    const endTimestamp = datePick.endDate+" 00:00:00";
 
     // const response = await axios.get(
-    //     "//" + window.location.hostname + `:8082/suppliers/${supplierId}/orders?startDate=${datePick.startDate}&endDate=${datePick.endDate}`
+    //     `//${window.location.hostname}:8083/products/suppliers/${supplierId}/importorders?startDate=${startTimestamp}&endDate=${endTimestamp}`
     // );
     const response = await axios.get(
-        `/api/suppliers/${supplierId}/orders?startDate=${datePick.startDate}&endDate=${datePick.endDate}`
+        `/api/products/suppliers/${supplierId}/importorders?startDate=${startTimestamp}&endDate=${endTimestamp}`
     );
     const importOrders = response.data;
     return { importOrders, datePick };
@@ -22,9 +24,9 @@ export default function ImportOrdersPage() {
     return (
         <>
             <h1>Chi tiết các đơn nhập từ nhà cung cấp: {importOrders[0].supplier.name}</h1>
-            <p>Thời gian: {new Date(datePick.startDate*1000).toLocaleDateString()} - {new Date(datePick.endDate*1000).toLocaleDateString()}</p>
+            <p>Thời gian: {new Date(datePick.startDate).toLocaleDateString()} - {new Date(datePick.endDate).toLocaleDateString()}</p>
 
-            <table>
+            <table className="table table-striped">
                 <thead>
                     <tr>
                         <th>Id đơn nhập</th>
@@ -42,7 +44,7 @@ export default function ImportOrdersPage() {
                             <td>{new Date(importOrder.importDate).toLocaleString()}</td>
                             <td>{importOrder.importProducts.reduce((prev, { quantity }) => prev + quantity, 0)}</td>
                             <td>{importOrder.importProducts.reduce((prev, { quantity, importPrice }) => prev + quantity * importPrice, 0) + importOrder.shippingCost}</td>
-                            <td><Link to={`/suppliers/orders/${importOrder.id}`}>Xem chi tiết</Link></td>
+                            <td><Link className="btn btn-secondary" to={`/suppliers/orders/${importOrder.id}`}>Xem chi tiết</Link></td>
                         </tr>
                     ))}
                 </tbody>

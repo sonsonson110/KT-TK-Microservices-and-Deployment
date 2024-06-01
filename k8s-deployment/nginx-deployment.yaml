@@ -23,7 +23,7 @@ spec:
       containers:
       # create one container and name the container 'nginx'
       - name: nginx
-        image: "sonsonson110/kien-truc-thiet-ke-final:apigatewayv1"
+        image: "sonsonson110/kien-truc-thiet-ke-final:apigatewayv3"
         ports:
         # the actual port the app listening in container
         - containerPort: 80

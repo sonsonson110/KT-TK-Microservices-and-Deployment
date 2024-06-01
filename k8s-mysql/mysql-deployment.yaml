@@ -27,7 +27,7 @@ spec:
         app: mysql
     spec:
       containers:
-      - image: "sonsonson110/kien-truc-thiet-ke-final:mysqlv2"
+      - image: "sonsonson110/kien-truc-thiet-ke-final:mysqlv3"
         name: mysql
         env:
         - name: MYSQL_ROOT_PASSWORD

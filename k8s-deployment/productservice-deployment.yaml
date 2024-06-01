@@ -18,6 +18,6 @@ spec:
     spec:
       containers:
       - name: productservice
-        image: "sonsonson110/kien-truc-thiet-ke-final:productservicev1"
+        image: "sonsonson110/kien-truc-thiet-ke-final:productservicev3"
         ports:
         - containerPort: 8080

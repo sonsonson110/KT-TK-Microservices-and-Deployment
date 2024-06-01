@@ -1,41 +1,38 @@
 package com.example.resellerservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Reseller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "user_id")
+    private Integer userId;
     private String name;
     private String street;
     private String city;
     private String province;
     private String zipcode;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     protected Reseller() {}
 
-    public Reseller(String name, String street, String city, String province, String zipcode) {
-        this.name = name;
-        this.street = street;
-        this.city = city;
-        this.province = province;
-        this.zipcode = zipcode;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    @Override
-    public String toString() {
-        return "Reseller{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", street='" + street + '\'' +
-                ", city='" + city + '\'' +
-                ", province='" + province + '\'' +
-                ", zipcode='" + zipcode + '\'' +
-                '}';
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getId() {

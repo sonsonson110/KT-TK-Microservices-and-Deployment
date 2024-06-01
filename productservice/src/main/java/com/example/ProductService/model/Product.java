@@ -1,6 +1,10 @@
 package com.example.ProductService.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Product {
@@ -10,10 +14,18 @@ public class Product {
     private Double price;
     private String unit;
     private Double weight;
-    @Column(name = "supplier_id")
-    private Integer supplierId;
+
+    @ManyToOne
+    @JoinColumn(name = "supplier_id")
+    @JsonIgnoreProperties("products") // use this for bidirectional way
+    private Supplier supplier;
+
     @Column(name = "available_amount")
     private Integer availableAmount;
+
+    @OneToMany(mappedBy = "product")
+    @JsonBackReference
+    private List<ImportProduct> importProducts;
 
     protected Product() {
     }
@@ -26,9 +38,17 @@ public class Product {
                 ", price=" + price +
                 ", unit='" + unit + '\'' +
                 ", weight=" + weight +
-                ", supplierId=" + supplierId +
+                ", supplier=" + supplier +
                 ", availableAmount=" + availableAmount +
                 '}';
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 
     public Integer getId() {
@@ -69,14 +89,6 @@ public class Product {
 
     public void setWeight(Double weight) {
         this.weight = weight;
-    }
-
-    public Integer getSupplierId() {
-        return supplierId;
-    }
-
-    public void setSupplierId(Integer supplierId) {
-        this.supplierId = supplierId;
     }
 
     public Integer getAvailableAmount() {

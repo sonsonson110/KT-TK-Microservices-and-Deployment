@@ -1,5 +1,7 @@
 > Skip to [Combine services with database & frontend with docker-compose](#combine-services-with-database-and-frontend-with-docker-compose) to run app on docker engine... or [Deploy on Kubernetes](#deploy-on-kubernetes) to practice deployment on Minikube.
 
+# Steps to create K8s deployments
+
 ## Create docker images
 **Make sure docker engine is running**
 
@@ -9,21 +11,21 @@ Navigate to ```./mysql```
 ```Dockerfile```
 ```Dockerfile
 FROM mysql:8.0
-COPY create-databases.sql /docker-entrypoint-initdb.d
+COPY backup.sql /docker-entrypoint-initdb.d
 ```
 Build image command (shell). Last parameter is the dockerfile directory (.)
 ```shell
-docker image build -t sonsonson110/kien-truc-thiet-ke-final:mysqlv2 .
+docker image build -t sonsonson110/kien-truc-thiet-ke-final:mysqlv3 .
 ```
 Push the image on public repository for K8s later
 ```shell
-docker push sonsonson110/kien-truc-thiet-ke-final:mysqlv2
+docker push sonsonson110/kien-truc-thiet-ke-final:mysqlv3
 ```
 
 ### 2. react app (frontend - production code only)
-Navigate to ```./frontend``` directory, get all libraries with ```yarn```
+Navigate to ```./frontend``` directory, get all libraries with ```npm install```
 
-Build the production code for react app with ```yarn build```
+Build the production code for react app with ```npm run build```
 
 ```Dockerfile```
 ```Dockerfile
@@ -37,8 +39,9 @@ CMD ["serve", "-s", "build"]
 ```
 Build the frontend image and push
 ```shell
-docker image build -t sonsonson110/kien-truc-thiet-ke-final:frontendv1 .
-docker push sonsonson110/kien-truc-thiet-ke-final:frontendv1
+docker image build -t sonsonson110/kien-truc-thiet-ke-final:frontendv3 .
+
+docker push sonsonson110/kien-truc-thiet-ke-final:frontendv3
 ```
 ### 3. user service
 Navigate to ./userservice
@@ -52,10 +55,11 @@ spring.datasource.username=root
 spring.datasource.password=password
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 ```
-Build image and push
+Clean and build project first. Then build image and push
 ```shell
-docker image build -t sonsonson110/kien-truc-thiet-ke-final:userservicev1 .
-docker push sonsonson110/kien-truc-thiet-ke-final:userservicev1
+docker image build -t sonsonson110/kien-truc-thiet-ke-final:userservicev3 .
+
+docker push sonsonson110/kien-truc-thiet-ke-final:userservicev3
 ```
 The same with other services
 > **_NOTE:_**  You might not pass the spring test during build phase, but the `.jar` file would work just fine.
@@ -98,24 +102,25 @@ COPY ./default.conf /etc/nginx/conf.d/default.conf
 ```
 Build the image and push
 ```shell
-docker image build -t sonsonson110/kien-truc-thiet-ke-final:apigatewayv1 .
-docker push sonsonson110/kien-truc-thiet-ke-final:apigatewayv1
+docker image build -t sonsonson110/kien-truc-thiet-ke-final:apigatewayv3 .
+
+docker push sonsonson110/kien-truc-thiet-ke-final:apigatewayv3
 ```
 
 ## Test the image by running container on host
 ### 1. mysql
 ```shell
-docker run --name mysql -p <host-target-port>:3306 -e MYSQL_ROOT_PASSWORD=password -d sonsonson110/kien-truc-thiet-ke-final:mysqlv1
+docker run --name mysql -p <host-target-port>:3306 -e MYSQL_ROOT_PASSWORD=password -d sonsonson110/kien-truc-thiet-ke-final:mysqlv3
 ```
-Then test the container on MySQL Workbench...
+Then test the container on Client GUI...
 
 ### 2. react app
 ```shell
-docker container run -it --name frontend -p <host-target-port>:3000 -a sonsonson110/kien-truc-thiet-ke-final:frontendv1
+docker container run -it --name frontend -p <host-target-port>:3000 sonsonson110/kien-truc-thiet-ke-final:frontendv3
 ```
 ### 3. user service
 ```shell
-docker container run -it --name userservice -p <host-target-port>:8080 sonsonson110/kien-truc-thiet-ke-final:userservicev1
+docker container run -it --name userservice -p <host-target-port>:8080 sonsonson110/kien-truc-thiet-ke-final:userservicev3
 ```
 The same run with other services
 > **Note**: remember to expose mysql container port and modify the `application.properties` before building image to test each service container.
@@ -220,6 +225,12 @@ kubectl apply -f k8s-mysql
 kubectl apply -f k8s-deployment
 ```
 
+Open new terminal and start mysql service to inspect from host with client GUI
+
+```shell
+minikube service mysql
+```
+
 ### 4. Apply service objects for frontend & backend
 ```shell
 kubectl apply -f k8s-service
@@ -246,4 +257,10 @@ See realtime log from a deployment
 ```shell
 # should be opened in new terminal
 kubectl logs deployment/<deployment-name> -f
+```
+
+# Miscellanea
+Change terminal tab name in Ubuntu
+```shell
+echo -ne "\033]0;SOME TITLE HERE\007"
 ```

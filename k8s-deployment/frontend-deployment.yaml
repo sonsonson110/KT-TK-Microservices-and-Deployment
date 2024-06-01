@@ -18,6 +18,6 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: "sonsonson110/kien-truc-thiet-ke-final:frontendv1"
+        image: "sonsonson110/kien-truc-thiet-ke-final:frontendv3"
         ports:
         - containerPort: 3000

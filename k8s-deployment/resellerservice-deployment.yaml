@@ -18,6 +18,6 @@ spec:
     spec:
       containers:
       - name: resellerservice
-        image: "sonsonson110/kien-truc-thiet-ke-final:resellerservicev1"
+        image: "sonsonson110/kien-truc-thiet-ke-final:resellerservicev3"
         ports:
         - containerPort: 8080
