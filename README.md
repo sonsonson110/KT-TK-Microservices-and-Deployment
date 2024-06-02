@@ -132,7 +132,7 @@ version: '3'
 
 services:
   mysql:
-    image: "sonsonson110/kien-truc-thiet-ke-final:mysqlv1"
+    image: "sonsonson110/kien-truc-thiet-ke-final:mysqlv3"
     environment:
       - MYSQL_ROOT_PASSWORD=password
     restart: unless-stopped
@@ -143,7 +143,7 @@ services:
       - 3306:3306
 
   frontend:
-    image: "sonsonson110/kien-truc-thiet-ke-final:frontendv1"
+    image: "sonsonson110/kien-truc-thiet-ke-final:frontendv3"
     stdin_open: true
 
   apigateway:
@@ -153,7 +153,7 @@ services:
       - supplierservice
       - productservice
       - frontend
-    image: "sonsonson110/kien-truc-thiet-ke-final:apigatewayv1"
+    image: "sonsonson110/kien-truc-thiet-ke-final:apigatewayv3"
     restart: always
     ports:
       - "3050:80"
@@ -162,7 +162,7 @@ services:
   userservice:
     depends_on:
       - mysql
-    image: "sonsonson110/kien-truc-thiet-ke-final:userservicev1"
+    image: "sonsonson110/kien-truc-thiet-ke-final:userservicev3"
     # in case mysql not yet created
     restart: on-failure
     # keep open terminal
