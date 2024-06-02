@@ -2,7 +2,6 @@ package com.example.ProductService.repository;
 
 import com.example.ProductService.model.Supplier;
 import com.example.ProductService.model.SupplierStat;
-import com.example.ProductService.model.custom.ISupplierStat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
