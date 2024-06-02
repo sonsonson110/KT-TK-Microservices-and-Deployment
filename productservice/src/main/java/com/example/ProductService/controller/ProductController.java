@@ -2,8 +2,7 @@ package com.example.ProductService.controller;
 
 import com.example.ProductService.model.ImportOrder;
 import com.example.ProductService.model.Product;
-import com.example.ProductService.model.Supplier;
-import com.example.ProductService.model.custom.SupplierStat;
+import com.example.ProductService.model.SupplierStat;
 import com.example.ProductService.service.ImportOrderService;
 import com.example.ProductService.service.ProductService;
 import com.example.ProductService.service.SupplierService;

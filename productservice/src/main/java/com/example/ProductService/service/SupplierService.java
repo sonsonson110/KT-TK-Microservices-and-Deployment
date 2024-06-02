@@ -1,6 +1,6 @@
 package com.example.ProductService.service;
 
-import com.example.ProductService.model.custom.SupplierStat;
+import com.example.ProductService.model.SupplierStat;
 import com.example.ProductService.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +17,6 @@ public class SupplierService {
     }
 
     public List<SupplierStat> getSupplierStatList(String startDate, String endDate) {
-        return supplierRepository.getSupplierStatByProductAmountList(startDate, endDate)
-                .stream()
-                .map((e) -> new SupplierStat(e.getId(), e.getName(), e.getDescription(), e.getProductAmount()))
-                .toList();
+        return supplierRepository.getSupplierStatByProductAmountList(startDate, endDate);
     }
 }
