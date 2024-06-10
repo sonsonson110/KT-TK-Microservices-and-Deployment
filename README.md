@@ -1,7 +1,9 @@
+## Demo video
+[![demo video](https://img.youtube.com/vi/zikYAh6lDss/0.jpg)](https://youtu.be/zikYAh6lDss)
+
 > Skip to [Combine services with database & frontend with docker-compose](#combine-services-with-database-and-frontend-with-docker-compose) to run app on docker engine... or [Deploy on Kubernetes](#deploy-on-kubernetes) to practice deployment on Minikube.
 
 # Steps to create K8s deployments
-
 ## Create docker images
 **Make sure docker engine is running**
 
